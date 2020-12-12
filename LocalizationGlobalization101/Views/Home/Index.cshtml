@@ -1,0 +1,93 @@
+﻿@using LocalizationGlobalization101.Enums
+@{
+    ViewData["Title"] = localizer["Title"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">@localizer["HelloWorld"]</h1>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>Culture Info</h3>
+            </div>
+            <div class="card-body">
+                <h6>@localizer["DefaultMessage"]</h6>
+                <p> @ViewBag.Date</p>
+                <p>@ViewBag.Currency</p>
+                <p>@ViewBag.ControllerMessage</p>
+                <div id="timeZone"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>Javascript Framework Localizasyonu</h3>
+            </div>
+            <div class="card-body">
+                <table id="myTable" class="table table-striped">
+                    <thead><tr><td>Header1</td><td>Header2</td></tr></thead>
+                    <tbody><tr><td>Content1</td><td>Content2</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>UTC Date</h3>
+            </div>
+            <div class="card-body">
+                <form method="get" asp-action="Index" asp-controller="Home">
+                    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <input type="datetime-local" value="@DateTime.Now.ToString("s")" name="Date" class="form-control" />
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-success">Get UTC Time</button>
+                        </div>
+                    </div>
+
+                    <br />
+                    @if (ViewBag.UTCDate != null)
+                    {
+                        <p class="text-center text-success">UTC Date  = @ViewBag.UTCDate</p>
+                    }
+                    <input type="hidden" value="" name="DateTimeOffset" id="datetimeOffset" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Enum Description Localizasyonu</h3>
+            </div>
+            <div class="card-body">
+
+                <div class="form-group">
+                    <select class="form-control" asp-items="(IEnumerable<SelectListItem>)@ViewData["genders"]"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+            $("#timeZone").text("Client Timezone = " + Intl.DateTimeFormat().resolvedOptions().timeZone);
+            var offsetInput = $("#datetimeOffset");
+            var timezoneOffset = new Date().getTimezoneOffset();
+            offsetInput.val(timezoneOffset);
+        });
+
+    </script>
+}

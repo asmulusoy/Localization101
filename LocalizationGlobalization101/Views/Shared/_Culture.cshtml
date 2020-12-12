@@ -1,0 +1,12 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<Microsoft.AspNetCore.Builder.RequestLocalizationOptions> locOptions
+
+@{ 
+    var culture = Context.Features.Get<Microsoft.AspNetCore.Localization.IRequestCultureFeature>();
+    var cultureList = locOptions.Value.SupportedUICultures.Select(x => new SelectListItem { Value = x.Name, Text = x.DisplayName }).ToList();
+    var returlUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+<div>
+    <form asp-controller="Home" asp-route-rUrl="@returlUrl" asp-action="CultureManagement" method="post">
+        <select onchange="this.form.submit();" name="c" asp-for="@culture.RequestCulture.UICulture.Name" asp-items="@cultureList"></select>
+    </form> 
+</div>

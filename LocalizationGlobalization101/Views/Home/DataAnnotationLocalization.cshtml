@@ -1,0 +1,29 @@
+﻿@model LocalizationGlobalization101.ViewModels.ProductViewModel 
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Data Annotations Localizasyonu</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input type="text" class="form-control" asp-for="Name">
+                        <span asp-validation-for="Name" class="form-text text-muted"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <input type="text" class="form-control" asp-for="Description">
+                        <span asp-validation-for="Description" class="form-text text-muted"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">@localizer["Submit"]</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
